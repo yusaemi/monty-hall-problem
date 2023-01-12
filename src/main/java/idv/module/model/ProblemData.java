@@ -13,16 +13,17 @@ import java.util.stream.IntStream;
  **/
 public class ProblemData {
 
-    private final static int pickOn = 2, skunk = 1;
-    private List<String> pool = new ArrayList<>();
+    private final List<String> pools = new ArrayList<>();
 
     public ProblemData() {
-        IntStream.range(0, pickOn + skunk).forEach(v -> pool.add(v < pickOn ? "pickOn" : "skunk"));
-        Collections.shuffle(pool);
+        int skunk = 1;
+        int pickOn = 2;
+        IntStream.range(0, pickOn + skunk).forEach(v -> pools.add(v < pickOn ? "pickOn" : "skunk"));
+        Collections.shuffle(pools);
     }
 
-    public List<String> getPool() {
-        return pool;
+    public List<String> getPools() {
+        return pools;
     }
 
 }
