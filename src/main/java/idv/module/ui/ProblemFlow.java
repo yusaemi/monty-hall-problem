@@ -25,7 +25,10 @@ public class ProblemFlow {
 
     public static void start(BufferedReader br) throws Exception {
 
-        boolean isErrorPara = false, isRestart = true, isManuallyFirst = true, isAutoFirst = true;
+        boolean isErrorPara = false;
+        boolean isRestart = true;
+        boolean isManuallyFirst;
+        boolean isAutoFirst;
 
         while (isRestart) {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -61,7 +64,7 @@ public class ProblemFlow {
                                 } else {
                                     System.out.println("\n※Invalid parameter!※\n");
                                 }
-                            } else if (input.matches("[0]")) {
+                            } else if (input.matches("0")) {
                                 break;
                             } else {
                                 System.out.println("\n※Invalid parameter!※\n");
@@ -78,7 +81,9 @@ public class ProblemFlow {
                         System.out.println("----------------------------");
                         Thread.sleep(10);
                         System.out.println("【Left： 1 / middle： 2 / Right： 3 / Quit this loop： 0】\n");
-                        AtomicInteger manuallySuccess = new AtomicInteger(), manuallyFailure = new AtomicInteger(), count = new AtomicInteger(1);
+                        AtomicInteger manuallySuccess = new AtomicInteger();
+                        AtomicInteger manuallyFailure = new AtomicInteger();
+                        AtomicInteger count = new AtomicInteger(1);
                         while (true) {
                             data = new ProblemData();
                             Thread.sleep(10);
@@ -120,7 +125,8 @@ public class ProblemFlow {
         System.out.println("----------------------------");
         Thread.sleep(10);
         System.out.println("【Left： 1 / middle： 2 / Right： 3 / Quit this loop： 0】\n");
-        List<String> select = new ArrayList<String>(), result = new ArrayList<String>();
+        List<String> select = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         IntStream.range(0, 3).forEach(v -> {
             result.add("pickOn".equals(data.getPool().get(v)) ? "★" : "☆");
             select.add(Integer.toString(v + 1).equals(position) ? "√" : " ");
@@ -139,7 +145,8 @@ public class ProblemFlow {
         System.out.println("----------------------------");
         Thread.sleep(10);
         System.out.println("【200 above and 10000000 below / Quit this loop： 0】\n");
-        AtomicInteger autoSuccess = new AtomicInteger(), autoFailure = new AtomicInteger();
+        AtomicInteger autoSuccess = new AtomicInteger();
+        AtomicInteger autoFailure = new AtomicInteger();
         IntStream.range(0, frequency).forEach(v -> {
             boolean isPickOn = "pickOn".equals(data.getPool().get((int) (Math.random() * data.getPool().size())));
             autoSuccess.set(isPickOn ? autoSuccess.incrementAndGet() : autoSuccess.get());
