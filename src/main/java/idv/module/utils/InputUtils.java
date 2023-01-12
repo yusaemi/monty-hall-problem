@@ -9,14 +9,16 @@ import java.io.IOException;
  * @author sero
  * @version 1.0.0
  **/
-public class InputUtils {
+public final class InputUtils {
 
-    public static String getInput(BufferedReader br) throws Exception {
+    private InputUtils() {}
+
+    public static String getInput(BufferedReader br) throws IOException, InterruptedException {
         String text = br.readLine().toLowerCase();
         if ("exit".equals(text)) {
             stop(br);
             System.out.println("\n【Good Bye.】\n");
-            Thread.sleep(1000);
+            Thread.sleep(500);
             System.exit(0);
         }
         return text;
