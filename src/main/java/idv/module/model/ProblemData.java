@@ -13,11 +13,12 @@ import java.util.stream.IntStream;
  **/
 public class ProblemData {
 
-    private final static int pickOn = 2, skunk = 1;
-    private List<String> pool = new ArrayList<>();
+    private static final int SKUNK = 1;
+    private static final int PICK_ON = 2;
+    private final List<String> pool = new ArrayList<>();
 
     public ProblemData() {
-        IntStream.range(0, pickOn + skunk).forEach(v -> pool.add(v < pickOn ? "pickOn" : "skunk"));
+        IntStream.range(0, PICK_ON + SKUNK).forEach(v -> pool.add(v < PICK_ON ? "pickOn" : "skunk"));
         Collections.shuffle(pool);
     }
 

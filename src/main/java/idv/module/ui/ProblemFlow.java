@@ -19,7 +19,9 @@ import java.util.stream.IntStream;
  * @author sero
  * @version 1.0.0
  **/
-public class ProblemFlow {
+public final class ProblemFlow {
+
+    private ProblemFlow() {}
 
     private static ProblemData data;
 
