@@ -35,14 +35,15 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>idv.module.App</mainClass> <!-- 這裡指定你的主類 -->
+                            <addClasspath>false</addClasspath>
+                            <mainClass>idv.module.App</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <Built-By>${user.name}</Built-By>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
-
             <!-- 打包ext -->
             <plugin>
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
