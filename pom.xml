@@ -29,6 +29,67 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <!--
+            打包第三方依賴
+            [maven-assembly-plugin]
+            用途：maven-assembly-plugin 提供了一種方式來建立定製的分發包，包括應用程式和依賴項目、資源文件、設定文件等，全部打包在一起。它主要用於創建可分發的封裝格式，如 zip、tar.gz 以及其他格式。
+            配置：你需要提供一個組件描述文件（assembly descriptor），來指定要包含哪些文件和目錄結構。這個插件在處理依賴衝突和細微配置上可能比較基本，不會自動處理依賴之間的重名問題。
+
+            [maven-shade-plugin]
+            用途：maven-shade-plugin 專門用於創建包含所有依賴的 uber-JAR（也稱為 fat-JAR）。這個插件的設計目的是為了處理更複雜的構建需求，如合併重名的 Java 包、修改包名、處理 SPI 文件等。
+            特點：它可以自動處理 JAR 檔案中的類名重名問題，通過使用包重命名和其他轉換來避免衝突。此外，它還允許你透過配置來過濾掉不需要的類和資源。
+            靈活性：maven-shade-plugin 提供了高度的靈活性來控制最終 JAR 的內容，並可以在創建 uber-JAR 時執行額外的資源轉換。
+
+            [使用選擇]
+            選擇哪個插件取決於你的具體需求：
+            如果你需要創建一個包含所有依賴、資源和配置的簡單可執行 JAR，且不擔心依賴之間可能的衝突，maven-assembly-plugin 可能就足夠了。
+            如果你的應用涉及到較複雜的依賴關係，或者需要處理特定的重名問題和高度定製的組建過程，maven-shade-plugin 會是更好的選擇。
+             -->
+            <!--
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>idv.module.App</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+             -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}</finalName>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>idv.module.App</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 不打包第三方依賴
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -37,11 +98,12 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>idv.module.App</mainClass> <!-- 這裡指定你的主類 -->
+                            <mainClass>idv.module.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
+            -->
 
             <!-- 打包ext -->
             <plugin>
