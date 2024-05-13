@@ -87,7 +87,7 @@ public final class ProblemFlow {
         List<String> select = new ArrayList<>();
         List<String> result = new ArrayList<>();
         IntStream.range(0, 3).forEach(v -> {
-            result.add("pickOn".equals(data.getPools().get(v)) ? "羊" : "空");
+            result.add("pickOn".equals(data.getPools().get(v)) ? "羊" : "車");
             select.add(Integer.toString(v + 1).equals(position) ? "√" : " ");
         });
         System.out.println("\t" + select.get(0) + "\t\t" + select.get(1) + "\t\t" + select.get(2));
@@ -113,19 +113,19 @@ public final class ProblemFlow {
             System.out.println("\n※Invalid parameter!※\n");
             return;
         }
-        int frequency = Integer.parseInt(input);
-        if (frequency < 200 || frequency > 10000000) {
+        BigDecimal frequency = new BigDecimal(input);
+        if (frequency.compareTo(new BigDecimal(200)) < 0 || frequency.compareTo(new BigDecimal(10000000)) > 0) {
             System.out.println("\n※Invalid parameter!※\n");
             return;
         }
         AtomicInteger autoSuccess = new AtomicInteger();
         AtomicInteger autoFailure = new AtomicInteger();
-        IntStream.range(0, frequency).forEach(v -> {
+        IntStream.range(0, frequency.intValueExact()).forEach(v -> {
             boolean isPickOn = "pickOn".equals(data.getPools().get((int) (Math.random() * data.getPools().size())));
             autoSuccess.set(isPickOn ? autoSuccess.incrementAndGet() : autoSuccess.get());
             autoFailure.set(!isPickOn ? autoFailure.incrementAndGet() : autoFailure.get());
         });
-        String rate = new BigDecimal(Double.toString(autoSuccess.get())).divide(new BigDecimal(Double.toString(frequency)), 10, RoundingMode.HALF_UP).toPlainString();
+        String rate = new BigDecimal(Double.toString(autoSuccess.get())).divide(frequency, 10, RoundingMode.HALF_UP).toPlainString();
         NumberFormat nf = NumberFormat.getPercentInstance();
         nf.setMinimumFractionDigits(2);
         System.out.println("Mode: automatic\nFrequency: " + frequency);
