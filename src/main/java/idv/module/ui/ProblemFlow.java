@@ -33,9 +33,9 @@ public final class ProblemFlow {
 
         while (isRestart) {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            System.out.println(isErrorPara ? "\n※Invalid parameter!※\n" : "");
-            System.out.println("【Enter 'exit' to exit this loop at anytime.】");
-            System.out.println("【automatic： 1 / manual： 2】");
+            IO.println(isErrorPara ? "\n※Invalid parameter!※\n" : "");
+            IO.println("【Enter 'exit' to exit this loop at anytime.】");
+            IO.println("【automatic： 1 / manual： 2】");
             System.out.print("Please choose mode： ");
             try {
                 isErrorPara = false;
@@ -81,7 +81,7 @@ public final class ProblemFlow {
     private static void manuallyStart(String position, AtomicInteger manuallySuccess, AtomicInteger manuallyFailure, AtomicInteger count) throws InterruptedException, IOException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         if (!position.matches("[0-3]")) {
-            System.out.println("\n※Invalid parameter!※\n");
+            IO.println("\n※Invalid parameter!※\n");
             return;
         }
         List<String> select = new ArrayList<>();
@@ -90,32 +90,32 @@ public final class ProblemFlow {
             result.add("pickOn".equals(data.getPools().get(v)) ? "羊" : "車");
             select.add(Integer.toString(v + 1).equals(position) ? "√" : " ");
         });
-        System.out.println("\t" + select.get(0) + "\t\t" + select.get(1) + "\t\t" + select.get(2));
-        System.out.println("╒═══════════════╤═══════════════╤═══════════════╕");
-        System.out.println("|\t" + result.get(0) + "\t|\t" + result.get(1) + "\t|\t" + result.get(2) + "\t|");
-        System.out.println("╘═══════════════╧═══════════════╧═══════════════╛");
+        IO.println("\t" + select.get(0) + "\t\t" + select.get(1) + "\t\t" + select.get(2));
+        IO.println("╒═══════════════╤═══════════════╤═══════════════╕");
+        IO.println("|\t" + result.get(0) + "\t|\t" + result.get(1) + "\t|\t" + result.get(2) + "\t|");
+        IO.println("╘═══════════════╧═══════════════╧═══════════════╛");
         boolean isPickOn = "pickOn".equals(data.getPools().get(Integer.parseInt(position) - 1));
         manuallySuccess.set(isPickOn ? manuallySuccess.incrementAndGet() : manuallySuccess.get());
         manuallyFailure.set(!isPickOn ? manuallyFailure.incrementAndGet() : manuallyFailure.get());
-        System.out.println(isPickOn ? "\nYou win!\n" : "\nYou lose!\n");
+        IO.println(isPickOn ? "\nYou win!\n" : "\nYou lose!\n");
         Thread.sleep(1);
         String rate = new BigDecimal(Double.toString(manuallySuccess.get())).divide(new BigDecimal(Double.toString(count.get())), 10, RoundingMode.HALF_UP) + "";
         NumberFormat nf = NumberFormat.getPercentInstance();
         nf.setMinimumFractionDigits(2);
-        System.out.println("Sequence number of play： " + count.get());
-        System.out.println("Average hit rate： " + nf.format(Double.parseDouble(rate)) + "\n");
+        IO.println("Sequence number of play： " + count.get());
+        IO.println("Average hit rate： " + nf.format(Double.parseDouble(rate)) + "\n");
         count.incrementAndGet();
     }
 
     private static void autoStart(String input) throws IOException, InterruptedException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
         if (input.matches("\\D+")) {
-            System.out.println("\n※Invalid parameter!※\n");
+            IO.println("\n※Invalid parameter!※\n");
             return;
         }
         BigDecimal frequency = new BigDecimal(input);
         if (frequency.compareTo(new BigDecimal(200)) < 0 || frequency.compareTo(new BigDecimal(10000000)) > 0) {
-            System.out.println("\n※Invalid parameter!※\n");
+            IO.println("\n※Invalid parameter!※\n");
             return;
         }
         AtomicInteger autoSuccess = new AtomicInteger();
@@ -128,24 +128,24 @@ public final class ProblemFlow {
         String rate = new BigDecimal(Double.toString(autoSuccess.get())).divide(frequency, 10, RoundingMode.HALF_UP).toPlainString();
         NumberFormat nf = NumberFormat.getPercentInstance();
         nf.setMinimumFractionDigits(2);
-        System.out.println("Mode: automatic\nFrequency: " + frequency);
-        System.out.println("Average hit rate: " + nf.format(Double.parseDouble(rate)) + "\n");
+        IO.println("Mode: automatic\nFrequency: " + frequency);
+        IO.println("Average hit rate: " + nf.format(Double.parseDouble(rate)) + "\n");
     }
 
     private static void playManuallyMode() throws InterruptedException, IOException {
-        System.out.println("----------------------------");
-        System.out.println("Play game on manually mode");
-        System.out.println("----------------------------");
+        IO.println("----------------------------");
+        IO.println("Play game on manually mode");
+        IO.println("----------------------------");
         Thread.sleep(1);
-        System.out.println("【Left： 1 / middle： 2 / Right： 3 / Quit this loop： 0】\n");
+        IO.println("【Left： 1 / middle： 2 / Right： 3 / Quit this loop： 0】\n");
     }
 
     private static void playAutomaticMode() throws InterruptedException, IOException {
-        System.out.println("----------------------------");
-        System.out.println("Play game on automatic mode");
-        System.out.println("----------------------------");
+        IO.println("----------------------------");
+        IO.println("Play game on automatic mode");
+        IO.println("----------------------------");
         Thread.sleep(1);
-        System.out.println("【200 above and 10000000 below / Quit this loop： 0】\n");
+        IO.println("【200 above and 10000000 below / Quit this loop： 0】\n");
     }
 
 }

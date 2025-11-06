@@ -17,7 +17,7 @@ public final class InputUtils {
         String text = br.readLine().toLowerCase();
         if ("exit".equals(text)) {
             stop(br);
-            System.out.println("\n【Good Bye.】\n");
+            IO.println("\n【Good Bye.】\n");
             Thread.sleep(500);
             System.exit(0);
         }

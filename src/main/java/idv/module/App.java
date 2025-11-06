@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
  **/
 public class App {
 
-    public static void main(String[] args) throws Exception {
+    void main() throws Exception {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ProblemFlow.start(br);
